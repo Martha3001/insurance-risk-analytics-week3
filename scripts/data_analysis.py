@@ -103,19 +103,6 @@ class DataAnalysis:
             else:
                 print(f"Column '{column}' does not exist in the DataFrame.")
                 return None
-            
-    def drop_columns(self, columns):
-        """
-        Drops one or more columns from the DataFrame.
-        
-        Args:
-            df (pd.DataFrame): The DataFrame to modify.
-            columns (str or list): Column name or list of column names to drop.
-            
-        Returns:
-            pd.DataFrame: DataFrame with specified columns dropped.
-        """
-        return self.data.drop(columns=columns, axis=1)
 
     def convert_to_datetime_format(self, column):
         """
@@ -128,7 +115,31 @@ class DataAnalysis:
             None: Modifies the DataFrame in place.
         """
         self.data[column] = pd.to_datetime(self.data[column], format='mixed')
-        self.data[column] = self.data[column].dt.strftime('%Y-%m-%d')
+
+    def convert_year_to_datetime_format(self, column):
+        """
+        Converts the specified column to datetime format in the DataFrame.
+        
+        Args:
+            column (str): The column name to convert.
+            
+        Returns:
+            None: Modifies the DataFrame in place.
+        """
+        self.data[column] = pd.to_datetime(self.data[column], format='%Y')
+
+
+    def convert_to_int(self, column):
+        """
+        Converts the specified column to int format in the DataFrame.
+        
+        Args:
+            column (str): The column name to convert.
+            
+        Returns:
+            None: Modifies the DataFrame in place.
+        """
+        self.data[column] = self.data[column].astype('Int64')
 
     def fill_with_not_specified(self, column):
         """
@@ -141,6 +152,7 @@ class DataAnalysis:
             None: Modifies the DataFrame in place.
         """
         self.data.loc[(self.data[column].isna()), column] = 'Not specified'
+        # return self.data
 
     def calculate_missing_value(self, column):
         """
@@ -164,3 +176,14 @@ class DataAnalysis:
             number: Number of occurance of value in column.
         """
         return len(self.data[self.data[column] == value])
+
+    def drop_columns(self, columns):
+        """
+        Drop one or more columns from the data.
+        Args:
+            columns (str or list): Column name or list of column names to drop
+        Returns:
+            pd.DataFrame: DataFrame with specified columns dropped
+        """
+        self.data = self.data.drop(columns=columns, axis=1)
+        return self.data
