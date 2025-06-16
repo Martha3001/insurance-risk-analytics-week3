@@ -9,7 +9,7 @@ class DataLoader:
         Args:
             filepath (str): Path to the input file
         """
-        csvfile = '../data/MachineLearningRating_v3.csv'
+        csvfile = '../data/raw/MachineLearningRating_v3.csv'
         try:
             # Load data from the specified file
             data = pd.read_csv(filepath, sep='|')
@@ -19,3 +19,19 @@ class DataLoader:
             return data
         except Exception as e:
             print(f"An error occurred: {e}")
+
+    def load_csv(self, csv_path):
+        """
+        Load data from a CSV file and return as a DataFrame.
+        Args:
+            csv_path (str): Path to the CSV file
+        Returns:
+            pd.DataFrame: Loaded data
+        """
+        try:
+            data = pd.read_csv(csv_path)
+            print(f"Loaded data from {csv_path}")
+            return data
+        except Exception as e:
+            print(f"An error occurred while loading CSV: {e}")
+            return None
