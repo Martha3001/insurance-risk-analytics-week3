@@ -94,4 +94,25 @@ class DataVisualize:
             plt.ylabel('')
             plt.legend(patches, value_counts.index, title=column, loc="best") 
             plt.show()
-            
+
+    def plot_histogram_chart(self, columns, bins=10, figsize=(8, 6), color='skyblue'):
+        """
+        Plot a histogram for a specified column.
+        Args:
+            column (str): Column name to plot
+            bins (int): Number of bins for the histogram
+            figsize (tuple): Figure size
+            color (str): Color of the histogram bars
+        """
+        # Convert single column name to list for uniform processing
+        if isinstance(columns, str):
+            columns = [columns]
+
+        for column in columns:
+            plt.figure(figsize=figsize)
+            self.data[column].hist(bins=bins, color=color, edgecolor='black')
+            plt.title(f'Histogram of {column}')
+            plt.xlabel(column)
+            plt.ylabel('Frequency')
+            plt.grid(axis='y', alpha=0.75)
+            plt.show()
